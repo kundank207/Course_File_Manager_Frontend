@@ -1,0 +1,113 @@
+I want you to update and generate a complete front-end UI (HTML + CSS + Bootstrap + JS) for my Course File Management System according to the below database schema and new feature requirements. The UI must be dynamic, responsive, clean, production-level and should align 100% with the database tables so backend API can be integrated easily.
+
+🔥 PRIMARY NEW FEATURES TO IMPLEMENT
+1️⃣ HOD / ADMIN CAN CREATE TEMPLATE STRUCTURE
+
+HOD or Admin can create a Course File Template containing 24 (or more) points/sections
+
+These sections become Course File Headings
+
+Heading → Sub-Heading → Sub-Sub-Heading → infinite nesting
+
+Each heading can contain files (PDF, DOCX, PPT, images etc.)
+
+Templates are stored in Template.structure (JSON)
+
+2️⃣ TEACHER CAN ALSO ADD NEW HEADINGS
+
+Even after template is applied, Teacher must be able to add more headings
+
+Useful if Teacher has extra notes or extra topics not in template
+
+Teacher can also add sub-heading and child nodes
+
+Unlimited dynamic depth, like Google Classroom material structure
+
+3️⃣ PDF / DOCUMENT COMMENT SYSTEM
+
+Every uploaded file must have:
+
+Feature	Required
+View PDF/File	YES
+Comment Box under each PDF	YES
+Teacher/HOD/Admin can comment	YES
+Threaded / Reply comments	YES
+Store in Comment Table	YES
+Show read/unread	YES
+
+Map comments to DB:
+
+Field	Table
+comment on a course file	course_file_id
+comment under unit/heading	heading_id
+comment on exact file	document_id
+comment by whom	author_id → Teacher.id
+4️⃣ ROLE–WISE DASHBOARD BEHAVIOR
+ROLE	FEATURES VISIBLE
+TEACHER	Upload notes, add headings, comment, view progress
+HOD	All teacher files, approve/reject, create template, comment audit
+ADMIN	Full control, manage template, departments, teachers, course mapping
+
+A normal teacher sees normal dashboard.
+If teacher is HOD → additional features unlock.
+If user is Admin → full system unlocked.
+
+Check via User.role and Department.hod_id.
+
+🔥 EXACT FRONT-END OUTPUT REQUIRED
+MODULE	MUST INCLUDE
+Template Builder (Admin/HOD)	drag & drop or add + remove 24 points, reorder, save JSON into DB
+Template Apply Screen (Teacher)	choose course → select template → structure auto-creates using Heading table
+Course File Upload UI	add unit → add heading → add sub-child nodes infinite → upload PDF → edit/delete/download
+Comment System	threaded comments, reply, tagging, notifications, unread highlight
+Approval System	HOD approves → Admin final approve (optional)
+Activity Log	auto-record every action using Activity_Log table
+DATABASE (THIS MUST BE USED IN FRONT-END MAPPING)
+
+Paste This In Prompt Without Changing
+The AI MUST use these table names and fields exactly.
+
+<PASTE YOUR FULL DATABASE AS GIVEN ABOVE>
+
+🔥 FINAL EXPECTED FRONT-END FILES
+/pages/admin/template-builder.html
+/pages/teacher/template-select.html
+/pages/teacher/upload-structure.html
+/pages/teacher/dashboard.html
+/pages/hod/approval-dashboard.html
+/assets/js/template.js          // Create-Edit-Apply Template
+/assets/js/headingTree.js       // Generate dynamic recursive UI
+/assets/js/upload.js            // PDF upload/edit/delete/download
+/assets/js/comments.js          // Comment + reply system
+/assets/js/role.js              // Role-based UI control
+
+
+Front-end must include:
+
+Collapsible sidebar for units/headings like Google Classroom
+
+Progress bars per unit
+
+File version history
+
+Smooth UI animations
+
+Bootstrap modern card layout
+
+Icons + Color theme (Professional Blue + Neutral Grey)
+
+Fully Responsive
+
+🔥 INSTRUCTIONS FOR AI
+
+When you generate output:
+
+❗ RETURN DIRECT HTML + CSS + JS CODE, NO EXPLANATION
+❗ Use Bootstrap 5 for design
+❗ Build UI from database mapping
+❗ Enable dynamic tree structure & comments
+❗ Implement all role features described
+
+END OF PROMPT
+
+(Just paste into AI & it will update your system exactly as required)

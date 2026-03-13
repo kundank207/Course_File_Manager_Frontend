@@ -1,0 +1,138 @@
+Teacher Dashboard (Default Features)
+
+Keep the existing teacher dashboard and add/update the following:
+
+Teacher Menu:
+
+Dashboard
+
+My Courses
+
+Upload Course Files
+
+Manage My Files
+
+Notifications
+
+Profile Settings
+
+Teacher Dashboard Cards:
+
+My Courses
+
+Uploaded Files
+
+Pending Files
+
+Recent Uploads History
+
+HOD Dashboard — Additional Features (only visible when role = HOD)
+
+When a teacher becomes HOD, automatically show these extra HOD components:
+
+Additional HOD Menu Items:
+
+Department Overview
+
+Teacher Performance
+
+Approve Course Files
+
+Department Reports
+
+Assign Courses to Teachers
+
+Manage Teachers (view-only or limited actions)
+
+Additional HOD Dashboard Cards:
+
+Total Teachers in Department
+
+Pending Approvals
+
+Department Courses
+
+Monthly Department Activity
+
+HOD-Specific Components:
+
+Table of all teachers + their progress
+
+Table of all course files awaiting approval
+
+Approve/Reject modal system
+
+Department analytics charts (bar, pie, line)
+
+Filter by semester / teacher / course
+
+Department summary section
+
+Leaderboard: top performing teachers
+
+Real-time activity log
+
+HOD Permissions:
+
+Approve or reject teacher uploads
+
+View all teacher courses
+
+Assign teacher to course
+
+Generate department-level reports
+
+Teacher → HOD transition must feel natural, meaning:
+No UI clutter, HOD tools should be grouped cleanly under a “Department Management” section.
+
+Admin Role (No Change Needed But Keep Structure)
+
+Admin can access everything.
+Ensure code structure supports 3 roles:
+
+Admin
+
+HOD
+
+Teacher
+
+Use JavaScript to show/hide menu items based on userRole variable:
+
+const userRole = "HOD"; // or "Teacher" / "Admin"
+
+
+Create reusable functions:
+
+loadTeacherDashboard();
+
+loadHodDashboardExtras();
+
+loadAdminDashboardExtras();
+
+Styling Requirement
+
+Use Bootstrap 5
+
+Smooth transitions
+
+Sidebar role-based expand sections
+
+HOD specific section must have special badge like:
+
+“HOD Tools”
+
+Keep dashboard visually very clean and professional
+
+Deliverables
+
+Updated role-based Teacher + HOD dashboard
+
+Updated menus, cards, pages
+
+HTML/CSS/JS with Bootstrap 5
+
+A clean dashboard.js that controls role-based UI
+
+Reusable components and modals
+
+Fully responsive, accessible UI

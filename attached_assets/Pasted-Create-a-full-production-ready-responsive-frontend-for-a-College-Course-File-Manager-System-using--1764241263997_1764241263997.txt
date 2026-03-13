@@ -1,0 +1,218 @@
+Create a full, production-ready, responsive frontend for a College Course File Manager System using HTML, CSS, Bootstrap 5, and Vanilla JS, based on the following database schema:
+
+Database: coursefiledb
+Tables: Institute, Department, Teacher, User, Notification, Activity_Log, Program, Branch, Semester, Course, Course_File, Approval, Course_Teacher, Heading, Document, Comment, Template
+
+The frontend must fully support Teacher, HOD, and Admin roles, role-based dashboards, and professional SaaS-grade UI.
+
+1️⃣ Role-Based Features
+Teacher
+
+Dashboard cards: My Courses, Uploaded Files, Pending Files, Recent Uploads
+
+Sidebar: Dashboard, My Courses, Upload Files, Manage My Files, Notifications, Profile Settings
+
+File upload (drag & drop), versioning, progress bar, supported types: PDF, DOCX, PPT, ZIP, JPG, PNG
+
+View own courses, documents, comments, approvals
+
+HOD (Teacher promoted)
+
+Additional Sidebar: Department Overview, Teacher Performance, Approve Course Files, Department Reports, Assign Courses, Manage Teachers
+
+Dashboard cards: Total Teachers, Pending Approvals, Department Courses, Monthly Activity
+
+Approve/Reject uploads, view all department courses, analytics charts, activity logs, bulk actions
+
+Admin
+
+Full system access: Dashboard, Users, Roles & Permissions, Colleges, Departments, Courses, Files, Reports, Settings
+
+Manage all users, teachers, HODs, courses, programs, institutes
+
+Backup & restore UI
+
+Add/Edit/Delete College (Institute) Details: Name, Code, Address, Email, Phone, Website
+
+Assign HOD to department, manage programs and branches
+
+Audit logs for all actions
+
+2️⃣ Pages to Include
+
+Login / Signup / Forgot Password
+
+Responsive card, left illustration, form validation
+
+Social login placeholders
+
+Dashboard
+
+Role-based display (Teacher / HOD / Admin)
+
+KPI cards (Files Uploaded, Pending Approvals, Courses, Teachers)
+
+Charts for uploads, approvals, department stats
+
+Notifications dropdown
+
+Institute / College Management (Admin)
+
+Add/Edit/Delete Institutes
+
+Table of all colleges with details: Name, Code, Address, Email, Phone, Website
+
+Search, filters, and sort
+
+Department Management
+
+Add/Edit/Delete Departments
+
+Assign HODs
+
+View associated teachers and programs
+
+Teacher / User Management
+
+Table: Name, Employee Code, Designation, Department, Email, Contact, Role
+
+Add/Edit/Delete teacher, assign department and role
+
+Activate/Deactivate account
+
+Program / Branch / Semester Management
+
+Program table: Name, Code, Degree Type, Duration
+
+Branch table: Name, Code, linked program
+
+Semester table: Semester Number, Label, Program, Branch
+
+Course Management
+
+Table: Course Code, Title, Credits, Contact Hour, Program, Branch, Semester
+
+Assign teachers, sections, academic year
+
+Add/Edit/Delete courses
+
+Course File Management
+
+Upload files with drag & drop
+
+Versioning and preview (PDF/DOCX/PPT/Images)
+
+Status: Pending, Approved, Rejected
+
+Approval workflow for HOD/Admin
+
+Headings (parent-child) for file structure
+
+Document table linked to headings
+
+Comments
+
+Comment on course file / heading / document
+
+Nested comments (reply to comment)
+
+Received / unread indicator
+
+Template Management
+
+Add/Edit/Delete templates
+
+JSON structure and checklist preview
+
+Assign to department or course
+
+Notifications
+
+Bell icon dropdown
+
+Read/unread state
+
+Notification types: File uploaded, File approved/rejected, Assignment, Announcement
+
+Reports & Analytics
+
+Charts: Files uploaded per teacher, Department progress, Course completion, File type distribution
+
+Export buttons (CSV/PDF placeholders)
+
+Calendar / Tasks
+
+Department calendar: submissions, deadlines, meetings, events
+
+Tasks per Teacher/HOD with completion status
+
+Settings / Profile
+
+Profile edit (photo, name, email)
+
+Change password
+
+Notification preferences
+
+Theme toggle (light/dark)
+
+Audit Log
+
+Table with: Actor, Action, Target Type, Target ID, Details, Timestamp
+
+404 / 500 Error Pages
+
+3️⃣ Features / UI Functionality
+
+Fully role-based menus and dashboard using userRole variable
+
+Smart notifications system
+
+File versioning and preview modal
+
+Bulk actions: upload, download, delete, approve/reject
+
+Global search: Course, File, Teacher, Department, Program
+
+Gamification badges for teachers: Top Performer, Most Files Uploaded
+
+Smooth micro-interactions: hover, focus, card lift, modal transition
+
+Dark / Light mode toggle with smooth transitions
+
+Responsive (Bootstrap 5 breakpoints)
+
+Accessible HTML: labels, aria attributes, focus states
+
+Sidebar dynamically expands role-specific sections (Teacher / HOD / Admin)
+
+4️⃣ Styling & Branding
+
+Professional color palette: Primary Blue/Indigo, Neutral Gray, Accent Color
+
+Google Fonts: Inter / Roboto
+
+Border radius consistent (.25rem/.5rem)
+
+Soft shadows, clean spacing
+
+Icons: Font Awesome / Bootstrap Icons
+
+5️⃣ Code & Deliverables
+
+Multi-page HTML structure: index.html, dashboard.html, institutes.html, departments.html, teachers.html, programs.html, branches.html, semesters.html, courses.html, files.html, templates.html, comments.html, notifications.html, reports.html, calendar.html, audit-log.html, settings.html, 404.html
+
+Folder structure:
+
+assets/
+    css/custom.css
+    js/app.js
+    images/
+    vendors/ (Bootstrap, Chart.js CDN)
+
+
+JavaScript functions for role-based UI display: loadTeacherDashboard(), loadHodExtras(), loadAdminExtras()
+
+Sample dummy data in JS for tables/charts
+
+Fully responsive, production-quality frontend ready to connect to backend

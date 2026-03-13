@@ -1,0 +1,137 @@
+I want you to generate a complete, polished, professional front-end page (HTML + CSS/Bootstrap + JavaScript) for a Teacher Notes Upload System similar to Google Classroom.
+
+Below is the exact functionality required.
+Follow everything carefully.
+Make the UI modern, clean, responsive, and professional.
+
+🔥 PROJECT REQUIREMENTS
+1. Teacher Dashboard
+
+The teacher dashboard must show:
+
+Teacher Name
+
+Course Name
+
+Assigned Subjects only (Example: DBMS, OSS)
+
+When a teacher selects a subject, only that subject’s structure appears.
+
+🔥 Notes Upload Structure Logic (VERY IMPORTANT)
+
+The teacher should upload notes in a hierarchical structure, exactly like this:
+
+Course  
+ └── Unit 1  
+        ├── Heading (e.g., “Introduction to DBMS”)  
+        │        ├── Sub Heading  
+        │        │         ├── Sub Sub Heading  
+        │        │         │         └── Notes Upload File  
+        │        │         └── Notes Upload File  
+        │        └── Notes Upload File  
+        └── Another Heading  
+                └── ... infinite levels  
+
+Teacher Can Do:
+
+✔ Add Units
+✔ Add Headings
+✔ Add Sub-Headings (infinite levels)
+✔ Add Notes file under any heading
+✔ Upload multiple files under same heading
+✔ Edit File Name
+✔ Delete File
+✔ Download File
+✔ Mark completion automatically
+
+🔥 Upload Feature Details
+
+Each last-level node must have:
+
+Upload Button (PDF, DOCX, PPT, Image, etc.)
+
+View File Name
+
+Delete button
+
+Edit button
+
+Download button
+
+Whenever a file is uploaded → mark that node as Completed (✔).
+
+🔥 Template Feature
+
+Admin provides multiple templates to teachers.
+Teacher must see:
+
+“Choose Template” popup
+
+List of templates
+
+When teacher clicks a template → UI changes to that template style
+
+Save Template
+
+Very similar to Google Classroom Material Templates.
+
+🔥 Progress Tracking
+
+Each Unit → Automatic Progress bar
+Example:
+
+Unit 1 – 4/10 Completed
+[██████████------] 40%
+
+🔥 Sidebar
+
+Show full structure in collapsible form:
+
+Unit 1
+
+Unit 2
+
+Unit 3
+
+etc.
+
+Inside them headings, subheadings
+
+Sidebar must update in real-time when teacher adds anything.
+
+🔥 Main Requirements Summary (Copy exactly)
+
+Build the page with:
+
+✔ HTML
+✔ CSS or Bootstrap 5
+✔ JavaScript (no frameworks)
+✔ Fully dynamic tree structure
+✔ Add / Edit / Delete nodes
+✔ Upload files
+✔ Download files
+✔ Completion progress
+✔ Clean UI
+✔ Template chooser
+✔ Responsive for mobile
+
+🔥 Deliverables
+
+Your output must contain:
+
+Fully working HTML / CSS / JS code
+
+Beautiful UI, modern colors, smooth cards
+
+Tree structure working 100%
+
+Upload file system (simulate with JS)
+
+Template selection system
+
+Collapsible sidebar
+
+Progress bars
+
+Do NOT give explanations.
+Just produce the full code.

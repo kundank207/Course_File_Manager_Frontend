@@ -1,0 +1,217 @@
+📌 REQUIRED FRONT-END UPDATE INSTRUCTIONS
+
+Using the above SQL database, update my existing Course File Manager front-end so that:
+
+1. Correct Entity Mapping (Most Important)
+
+Map all front-end operations to the correct database tables:
+
+✔ Institute → Department → Program → Branch → Semester
+✔ Course → Course_File → Heading → Document
+✔ Teacher → User → Course_Teacher
+✔ Approval → Notifications → Activity_Log
+✔ Template → Template Structure
+
+The UI must be aligned so the backend developer can directly connect using this schema.
+
+2. Update Teacher Dashboard According to Database
+
+The teacher dashboard must load everything dynamically from the DB structure:
+
+Teacher Sees:
+
+Assigned Courses (from Course_Teacher)
+
+Only those Course Files where:
+
+created_by = teacher_id
+
+OR teacher is assigned in Course_Teacher
+
+Academic Year selection
+
+List of units/headings (linked to Heading table)
+
+Only approved courses appear if:
+
+Course_File.status = 'APPROVED'
+
+Only assigned courses appear if:
+
+teacher_id exists in Course_Teacher.
+
+3. Course File Tree Structure Must Match Heading Table
+
+The entire notes structure must be built from the database table:
+
+Table: Heading
+
+id
+
+course_file_id
+
+parent_heading_id
+
+title
+
+order_index
+
+Your front-end must:
+
+✔ Load heading tree recursively
+✔ Support infinite nesting
+✔ Mark completed when Document exists
+✔ Allow Add Heading, Add Sub-Heading
+✔ Delete Heading (where allowed)
+✔ Reorder headings (update order_index)
+
+4. Upload System Must Match Document Table
+Table: Document
+
+heading_id
+
+uploaded_by
+
+file_name
+
+file_path
+
+type
+
+file_size
+
+version_no
+
+Front-end must:
+
+✔ Upload file
+✔ Display file name
+✔ Show version number
+✔ Support delete / edit / download
+✔ Mark completion on upload
+✔ Show file size & type
+✔ Update version number when re-uploaded
+
+5. Template System Must Match Template Table
+Table: Template
+
+name
+
+description
+
+structure JSON
+
+checklist JSON
+
+Front-end must:
+
+✔ Show multiple template options
+✔ Allow teacher to choose template
+✔ Load template structure into "Heading" builder
+✔ Save chosen template structure preview
+✔ Allow admin to create templates
+✔ Allow HOD to approve templates
+
+6. Approval Workflow Integration
+
+Match table:
+
+Approval
+
+approver_id
+
+stage
+
+status
+
+comment
+
+Front-end Must Support:
+
+✔ Teacher → Submit
+✔ HOD → Approve / Reject
+✔ Principal → Approve / Reject
+✔ Comments visible under course file
+✔ Comments linked via (course_file_id, heading_id, document_id)
+
+7. Notification Based on Actions
+
+Match Notification table:
+
+✔ Send notification when:
+
+New file uploaded
+
+Course file submitted
+
+Course file approved
+
+Comment added
+
+Front-end must include:
+
+✔ Notification bell
+✔ Dropdown list
+✔ Mark as read
+
+8. Activity Log Integration
+
+Every major action must call:
+
+Activity_Log
+
+actor_id
+
+action
+
+target_type
+
+target_id
+
+details
+
+Front-end must support sending logs on:
+
+✔ Upload
+✔ Delete
+✔ Edit
+✔ Template Applied
+✔ Heading Created
+✔ Course File Submitted
+✔ Approval Reviewed
+
+9. Update the UI to Match This Data Model
+
+You must update:
+
+✔ Forms
+✔ Dropdowns
+✔ Dynamic lists
+✔ Sidebar
+✔ Tree structure
+✔ File uploads
+✔ Progress bars
+✔ Template popup
+
+Everything must be aligned to the SQL structure.
+
+10. Deliverables
+
+Return the complete updated project:
+
+✔ Full HTML
+✔ Full CSS / Bootstrap 5
+✔ Full JavaScript
+✔ Clean folder structure
+✔ Correct mapping names matching database
+✔ Comments in code explaining DB mapping
+✔ Updated tree builder
+✔ Updated file uploader
+✔ Updated template system
+✔ Dynamic progress bar
+✔ Updated Teacher dashboard
+✔ Updated Admin/HOD dashboard
+✔ API endpoint placeholders for backend developer
+
+Do NOT rewrite my database.
+Just use it EXACTLY as given.

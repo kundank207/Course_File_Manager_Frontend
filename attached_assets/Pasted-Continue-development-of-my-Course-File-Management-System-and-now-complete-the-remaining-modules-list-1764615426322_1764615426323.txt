@@ -1,0 +1,117 @@
+Continue development of my Course File Management System and now complete the remaining modules listed below.
+The system is based on the SQL schema previously provided.
+Do NOT break existing functionality — only extend and finish what is pending.
+
+1️⃣ ADMIN PANEL — Program / Branch / Semester
+
+Add FULL UI functionality for these 3 sections under Admin:
+
+Required features:
+Function	Required UI	Storage/Data
+Create Program	Dialog with form fields	store using MySQL table Program
+Create Branch	Dialog with dropdown (Program select)	table Branch
+Create Semester	Dialog with dropdown (Program + Branch)	table Semester
+Edit existing items	Editable dialog with prefilled values	DB update
+Delete with confirmation popup	"Are you sure?" modal	Hard delete or soft delete
+Fields to include:
+
+Program
+
+name, code, duration_year, degree_type, department_id
+
+Branch
+
+name, code, program_id
+
+Semester
+
+semester_number, label, program_id, branch_id
+
+2️⃣ ADMIN — Role Management System
+
+Implement working UI & actions for User Role Control:
+
+Action	Must Implement
+Add Role Dialog	ROLE_NAME input
+Assign Role	change user role in User.role
+Display All Roles	Table UI
+Delete role (optional)	Confirmation before delete
+3️⃣ ADMIN — Course Edit + Delete System
+
+Implement full course management actions:
+
+Functionalities needed:
+
+Edit Course (Modal form pre-filled)
+
+Delete Course (with confirmation)
+
+Update DB record on save
+
+Reflect changes instantly in UI
+
+Course fields from table Course:
+
+Field	Type
+program_id	FK
+branch_id	FK
+semester_id	FK
+code	String
+title	String
+credits	Int
+contact_hour	Int
+4️⃣ SUBJECT HEAD (HOD) DASHBOARD — Build Full Page
+
+A HOD/Subject Head has more permissions than a normal teacher but less than admin.
+
+Create a new dashboard for HOD:
+
+HOD Dashboard Must Show:
+
+✔ Teachers under same department
+✔ Course files submitted by teachers
+✔ Approval Required queue
+✔ Templates created + option to create new
+✔ Progress summary graphs
+✔ Document review with COMMENT feature
+
+Add HOD route:
+
+/hod/dashboard
+
+
+Show extra menu only if:
+
+User.role = "HOD" OR Department.hod_id = Teacher.id
+
+DELIVERABLE FORMAT
+
+Return final code in structured format:
+
+/admin/programs.html
+/admin/branches.html
+/admin/semesters.html
+/admin/roles.html
+/admin/courses.html
+/hod/dashboard.html
+
+
+JS for each CRUD module + dialogs
+
+DB integration functions
+
+Comment where backend endpoints will connect later
+
+⚠ Output must include:
+
+UI pages
+
+Modals
+
+CRUD actions
+
+JavaScript logic
+
+Clean responsive layout
+
+Integration-ready code

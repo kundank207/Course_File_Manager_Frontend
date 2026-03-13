@@ -1,0 +1,232 @@
+Create a fully professional, modern, responsive Admin Panel Dashboard UI using HTML, CSS, Bootstrap 5, and Vanilla JavaScript only (no React, no frameworks).
+The final output must look like a premium SaaS admin interface and should include complete multi-page structure, UI components, and clean code that can easily be connected to a backend later.
+
+General Requirements
+
+Build all pages using Bootstrap 5 (CDN).
+
+Use clean modern UI with spacing, shadows, light & dark mode support.
+
+Use Font Awesome/Bootstrap Icons for icons.
+
+Include comments in HTML/CSS/JS.
+
+Make everything fully responsive (desktop, tablet, mobile).
+
+Include a complete folder structure:
+
+/assets/css/custom.css  
+/assets/js/app.js  
+/assets/images/  
+
+
+Include a short README.
+
+Pages to Include
+1️⃣ Admin Login Page
+
+Centered form card
+
+Email, Password, Remember Me
+
+Login Button
+
+Link to reset password
+
+Professional brand header
+
+2️⃣ Main Admin Dashboard
+
+Left sidebar (fixed) with icons + labels:
+
+Dashboard
+
+Users
+
+Roles & Permissions
+
+Courses
+
+Files
+
+Reports
+
+Settings
+
+Logout
+
+Top navbar:
+
+Search bar
+
+Notifications
+
+Theme toggle
+
+User profile dropdown
+
+Dashboard widgets:
+
+Total Users
+
+Total Courses
+
+Total Files
+
+Storage Used
+
+Charts area:
+
+Line chart (uploads per month)
+
+Donut/Pie chart (file categories)
+
+Use Chart.js (CDN)
+
+3️⃣ User Management Page
+
+Table with:
+
+User ID
+
+Name
+
+Email
+
+Role
+
+Status
+
+Created At
+
+Actions (Edit/Delete)
+
+Search bar + Filters
+
+Add User button → Bootstrap modal with form
+
+Edit User modal
+
+Delete confirmation modal
+
+4️⃣ Roles & Permissions
+
+Table listing roles
+
+Click role → open modal showing permissions list
+
+Toggle permissions via switches
+
+Add new role modal
+
+5️⃣ Course Management (Admin View)
+
+Table list of all courses:
+
+Course Code
+
+Course Title
+
+Instructor
+
+Semester
+
+File Count
+
+Actions
+
+Add/Edit Course modal
+
+Upload files from admin (optional button)
+
+6️⃣ File Manager
+
+Grid/List view toggle
+
+file preview card
+
+Filters (Course, Type, Date)
+
+Bulk select + bulk delete
+
+Pagination
+
+File actions:
+
+View
+
+Download
+
+Delete
+
+7️⃣ Reports & Analytics
+
+Summary cards
+
+Multiple charts using Chart.js
+
+Export buttons: CSV, PDF (UI only)
+
+Table of recent activity
+
+8️⃣ Settings Page
+
+Profile settings
+
+Change password
+
+Notification preferences
+
+Theme selection (light/dark)
+
+System branding (logo upload)
+
+Design Requirements
+
+Clean and modern (Stripe / Linear / Notion style UI)
+
+Color palette:
+
+Primary blue tone
+
+Neutral grays
+
+Accent color for buttons
+
+Rounded corners
+
+Soft shadows
+
+Hover interactions
+
+Smooth transitions
+
+Final Deliverables
+
+Full multi-page admin panel (HTML files):
+
+login.html
+
+dashboard.html
+
+users.html
+
+roles.html
+
+courses.html
+
+files.html
+
+reports.html
+
+settings.html
+
+Organized folder structure
+
+Fully responsive layouts
+
+Bootstrap 5 enabled UI
+
+Vanilla JS for interactions
+
+Ready to integrate with any backend

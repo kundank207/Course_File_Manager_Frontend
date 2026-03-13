@@ -1,0 +1,160 @@
+PROMPT (START)
+
+Create a complete, production-ready frontend for a Course File Manager web app using plain HTML, CSS, Bootstrap 5 (no frameworks like React). Deliver fully structured, componentized, accessible, responsive code that a developer can plug into a backend later.
+
+Primary goals
+
+Professional, modern SaaS dashboard aesthetic (clean spacing, readable typography, subtle shadows, consistent color system).
+
+Pixel-perfect on desktop, tablet and mobile (Bootstrap breakpoints).
+
+Accessibility: semantic HTML, ARIA attributes where needed, keyboard focus states, contrast ratios that meet WCAG AA.
+
+Developer-friendly output: clear folder structure, modular partials (header, sidebar, modals), comments in code, and sample dummy data.
+
+Pages & features (implement all)
+
+Login / Signup / Forgot Password
+
+Centered form card, left-side illustration on wide screens.
+
+Inputs: Email, Password, "Remember me", Login button.
+
+Signup and Forgot Password pages with validation messages.
+
+Social login button placeholders (Google, Microsoft).
+
+Dashboard (Landing after login)
+
+Top navbar with app logo, search, notifications icon, user avatar dropdown (Profile / Settings / Logout).
+
+Left collapsible sidebar (icons + labels) with active state:
+
+Dashboard, Upload Files, Courses, Files, Reports, Settings.
+
+KPI cards (Total Courses, Files, Pending Approvals, Storage Used).
+
+Recent activity list and a chart area (placeholder chart image or canvas). Use lightweight chart placeholders and example JavaScript to initialize Chart.js (link CDN).
+
+Courses — List & CRUD
+
+Table with columns: Course Code, Course Title, Semester, Instructor, Files Count, Actions (Edit, Delete).
+
+"Add Course" button opens Bootstrap modal with accessible form fields, client-side validation, and success/error alerts.
+
+Inline edit and confirmation delete modal.
+
+Upload Files
+
+Course selector (select2-like searchable dropdown or Bootstrap custom select).
+
+Drag & drop area with fallback file input.
+
+Supported types text (PDF, DOCX, PPTX, ZIP, JPG, PNG).
+
+Upload progress UI (progress bars per file) and client-side simulated upload via JavaScript.
+
+After upload, show file list with thumbnails/icons, file size, uploader, upload date, and actions (View, Download, Delete).
+
+Files Manager
+
+Toggle between grid card view and list/table view.
+
+Search bar and filters (Course, File Type, Semester, Date range).
+
+File card shows file name, small preview icon, tags, actions.
+
+Bulk select and bulk-download/delete actions (UI only).
+
+Reports / Analytics
+
+Card with monthly uploads chart, pie chart for file types, table of top courses by file count.
+
+Export buttons (CSV / PDF placeholders).
+
+Settings / Profile
+
+Profile edit form (name, email, avatar upload).
+
+Change password section with validation.
+
+Notification toggles and storage usage display.
+
+Theme toggle (light / dark switched using CSS classes).
+
+Global UI Requirements
+
+Use Bootstrap 5 utilities and components (navbar, nav, cards, tables, modals, form validation, tooltips).
+
+Use Font Awesome or Bootstrap Icons via CDN.
+
+Use Google Fonts (one or two families; headings + body).
+
+Mobile-first responsiveness: breakpoints at xs/sm/md/lg/xl consistent with Bootstrap.
+
+Smooth micro-interactions: hover states, focus outlines, subtle card hover lift, modal transition.
+
+Provide a 404 and 500 simple error page template.
+
+Code deliverables & structure
+
+Single ZIP with:
+
+index.html (Login)
+
+dashboard.html
+
+courses.html
+
+upload.html
+
+files.html
+
+reports.html
+
+settings.html
+
+404.html
+
+assets/ folder: css/ (custom.css), js/ (app.js, upload-sim.js), images/ (illustrations, icons), vendors/ (bootstrap, chartjs via CDN commented fallback).
+
+Clean custom.css for theme, spacing, colors (do not override Bootstrap core unnecessarily; use utility classes and a small custom stylesheet).
+
+app.js must contain:
+
+Sample data arrays for courses and files used to render tables/lists.
+
+Functions to simulate upload with progress bars.
+
+Simple initialization code for charts (Chart.js via CDN).
+
+Comments and TODOs where backend integration would happen (API endpoints example: /api/courses, /api/files).
+
+Styling & branding
+
+Color palette: Primary (hex), Secondary (muted), Accent for buttons — provide 3 HEX values. (Pick a professional blue/indigo palette.)
+
+Typography: Google Font for headings (e.g., Inter/Roboto), body fallback system fonts.
+
+Use consistent border radii (e.g., .5rem or .25rem) and spacing scale.
+
+Accessibility & performance
+
+All images must include alt text or role="presentation" if decorative.
+
+Forms should use label tags and aria-describedby for help text.
+
+Ensure keyboard focus order and visible focus styles.
+
+Minimize external blocking resources and use CDN links commented in HTML.
+
+Deliverable expectations
+
+Fully working static frontend (no backend required) that the client can open in browser and click through.
+
+Ready-to-download ZIP with code and assets.
+
+Provide short README (in ZIP root) with instructions: how to open pages, where to connect API endpoints, and what to change for branding/colors.
+
+End of prompt.
+Make the HTML/CSS/Bootstrap output be clean, commented, and production mindful — the client should feel confident the UI is ready to be connected to a backend.

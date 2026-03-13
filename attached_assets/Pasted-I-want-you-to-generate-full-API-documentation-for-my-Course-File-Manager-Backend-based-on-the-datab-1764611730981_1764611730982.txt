@@ -1,0 +1,195 @@
+I want you to generate full API documentation for my Course File Manager Backend, based on the database schema below and the modules listed in the instructions.
+
+The documentation must be written in a real production API format, including:
+
+✔ Endpoints (GET/POST/PUT/DELETE)
+
+✔ Path parameters
+✔ Query parameters
+✔ Request body examples
+✔ Response JSON examples
+✔ Authentication requirements (JWT)
+✔ Status codes
+✔ Notes / edge cases
+✔ Role access level (TEACHER/HOD/ADMIN)
+✔ API workflow diagrams/table format
+✔ Pagination structure where needed
+
+Output must be formatted as a professional API reference manual, like Swagger/Postman/REST API docs.
+
+📌 DATABASE (use as source of truth for API)
+<PASTE THE DATABASE AGAIN HERE>
+
+📌 FEATURES THAT MUST BE INCLUDED IN API DOCUMENTATION
+🔹 AUTHENTICATION API
+Feature	Description
+Register	Admin creates account
+Login	JWT based
+Refresh Token	Optional
+Me/Profile API	Return logged user & role
+
+Endpoints to generate docs for:
+
+POST /api/auth/register
+POST /api/auth/login
+GET  /api/auth/me
+POST /api/auth/change-password
+
+🔹 INSTITUTE → COLLEGE MODULE
+
+CRUD for Institute, Department, Program, Branch, Semester, Course.
+
+Generate documentation for:
+
+/api/institutes
+/api/departments
+/api/programs
+/api/branches
+/api/semesters
+/api/courses
+
+
+Include cascade relation lookup like:
+
+Get departments inside an institute
+
+Get programs by department
+
+Get branches by program
+
+Get courses by semester
+
+🔹 USER & TEACHER MANAGEMENT
+/api/teachers
+/api/users
+/api/course-teachers  (course assignment to teacher)
+GET /api/teachers/{teacherId}/courses
+
+
+Include role assignment rules:
+
+TEACHER (default)
+
+HOD (if Department.hod_id = teacher.id)
+
+ADMIN (full access)
+
+🔹 TEMPLATE MANAGEMENT API (HOD + ADMIN)
+POST /api/templates
+GET  /api/templates
+GET  /api/templates/{id}
+PUT  /api/templates/{id}
+DELETE /api/templates/{id}
+
+
+Structure JSON sample:
+
+{
+  "name":"DBMS Template",
+  "description":"Course File Format 24 Points",
+  "structure":[
+     {"title":"Unit 1","children":[{"title":"Topic 1"},{"title":"Topic 2"}]},
+     {"title":"Unit 2"}
+  ],
+  "checklist":["Cover Page","Attendance Sheet","CIA Marks"]
+}
+
+🔹 COURSE FILE GENERATION (Based on Template)
+POST /api/course-files
+GET  /api/course-files/my
+GET  /api/course-files/{id}
+PUT  /api/course-files/{id}
+DELETE /api/course-files/{id}
+
+
+Flow documentation must show:
+
+Teacher selects → Template Applied → Headings Auto Generated
+
+🔹 HEADING TREE STRUCTURE API
+GET  /api/course-files/{id}/headings
+POST /api/headings
+PUT  /api/headings/{id}
+DELETE /api/headings/{id}
+
+
+Must show hierarchical example.
+
+🔹 DOCUMENT UPLOAD + NOTES
+POST /api/headings/{headingId}/documents   (upload)
+GET  /api/headings/{headingId}/documents
+GET  /api/documents/{id}/download
+PUT  /api/documents/{id}
+DELETE /api/documents/{id}
+
+
+Must describe:
+
+version_no increment logic
+
+file types allowed
+
+storage flow
+
+Example upload request body:
+
+file: <PDF/DOCX/PPT/IMG>
+
+🔹 COMMENT SYSTEM
+POST /api/comments
+GET  /api/course-files/{id}/comments
+GET  /api/documents/{id}/comments
+DELETE /api/comments/{id}
+
+
+Must show threaded replies using parent_comment_id.
+
+🔹 APPROVAL WORKFLOW (HOD/ADMIN)
+GET  /api/approvals/pending
+POST /api/approvals
+GET  /api/course-files/{id}/approvals
+
+
+Stages:
+
+HOD_REVIEW → ADMIN_REVIEW → APPROVED/REJECTED
+
+
+Docs should clearly state role restrictions.
+
+🔹 NOTIFICATION SYSTEM
+GET /api/notifications/my
+POST /api/notifications/mark-read
+
+
+Generated docs must include notification JSON example.
+
+🔹 ACTIVITY LOG
+GET /api/activity-logs
+
+
+Include filters:
+
+?action=
+&actor=
+&targetType=
+&fromDate=
+&toDate=
+
+🔥 FINAL OUTPUT FORMAT
+
+Documentation must be delivered in:
+
+Format	Required
+Markdown docs	YES
+JSON API response examples	YES
+cURL / Axios / JavaScript examples	YES
+Optional Swagger YAML generation	YES
+Endpoints grouped by module	YES
+🔥 Final Step for AI
+
+Generate the full API Documentation now based on everything above.
+Provide clean, formatted developer-ready documentation.
+DO NOT write backend code — only documentation.
+
+END OF PROMPT

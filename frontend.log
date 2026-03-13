@@ -1,0 +1,26 @@
+
+> rest-express@1.0.0 dev
+> cross-env NODE_ENV=development tsx server/index.ts
+
+8:37:16 PM [express] serving on port 5000
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+8:42:56 PM [vite] (client) hmr update /src/pages/dashboard/TemplateSelection.tsx, /src/index.css
+8:49:44 PM [vite] (client) hmr update /src/pages/dashboard/TemplateSelection.tsx, /src/index.css
+8:50:09 PM [vite] (client) hmr update /src/pages/dashboard/TemplateSelection.tsx, /src/index.css
+8:54:08 PM [vite] (client) hmr update /src/pages/dashboard/TemplateSelection.tsx, /src/index.css
+10:26:18 PM [vite] (client) hmr update /src/index.css, /src/components/CourseStructureTree.tsx
+10:27:26 PM [vite] (client) hmr update /src/pages/dashboard/CourseStructure.tsx, /src/index.css
+10:27:43 PM [vite] (client) hmr update /src/pages/dashboard/TemplateSelection.tsx, /src/index.css
+10:30:02 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+10:38:53 PM [vite] (client) hmr update /src/pages/dashboard/TemplateSelection.tsx, /src/index.css
+10:42:33 PM [vite] (client) hmr update /src/pages/dashboard/TemplateSelection.tsx, /src/index.css
+10:49:59 PM [vite] (client) hmr update /src/index.css, /src/components/CourseStructureTree.tsx
+10:50:35 PM [vite] (client) hmr update /src/pages/dashboard/CourseStructure.tsx, /src/index.css
+11:33:20 PM [vite] (client) hmr update /src/pages/dashboard/CourseStructure.tsx, /src/index.css
+11:34:47 PM [vite] (client) hmr update /src/index.css, /src/components/CourseStructureTree.tsx
+11:56:50 PM [vite] (client) hmr update /src/index.css, /src/components/CourseStructureTree.tsx
+12:01:44 AM [vite] (client) hmr update /src/index.css, /src/components/CourseStructureTree.tsx
+12:02:05 AM [vite] (client) hmr update /src/index.css, /src/components/CourseStructureTree.tsx
+12:07:35 AM [vite] (client) hmr update /src/pages/dashboard/Files.tsx, /src/index.css
+12:20:00 AM [vite] (client) hmr update /src/pages/hod/HodTeachers.tsx, /src/pages/hod/HodApprovals.tsx, /src/pages/dashboard/Reports.tsx, /src/pages/admin/AdminDashboard.tsx, /src/pages/common/Calendar.tsx, /src/pages/dashboard/ViewCourseFile.tsx, /src/pages/dashboard/TeacherNotesUpload.tsx, /src/pages/dashboard/Settings.tsx, /src/pages/dashboard/ApprovalWorkflow.tsx, /src/pages/admin/AdminAuditLogs.tsx, /src/components/layout/TeacherSidebar.tsx, /src/components/layout/HodSidebar.tsx, /src/components/layout/AdminSidebar.tsx, /src/index.css
+12:40:57 AM [vite] (client) hmr update /src/pages/dashboard/Files.tsx, /src/index.css
