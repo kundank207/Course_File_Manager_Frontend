@@ -72,7 +72,7 @@ export default function LoginPage() {
 
   const onSubmit = async (values: LoginForm) => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
       const res = await fetch(`${baseUrl}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -1,6 +1,6 @@
 import { authFetch } from "@/utils/authFetch";
 
-const API = "http://localhost:8080/api/program";
+const API = "/api/program";
 
 
 export const getPrograms = async () => {

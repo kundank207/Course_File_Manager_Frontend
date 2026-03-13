@@ -45,7 +45,7 @@ export default function DepartmentFacultyPage() {
 
   /* ===== LOAD ===== */
   useEffect(() => {
-    authFetch("http://localhost:8080/api/hod/faculty")
+    authFetch("/api/hod/faculty")
       .then(res => res.json())
       .then(data => {
       setFaculty(Array.isArray(data) ? data : []);
@@ -65,7 +65,7 @@ export default function DepartmentFacultyPage() {
 
     try {
       const res = await authFetch(
-        `http://localhost:8080/api/hod/faculty/${editing.id}`,
+        `/api/hod/faculty/${editing.id}`,
         {
           method: "PUT",
           body: JSON.stringify(form),

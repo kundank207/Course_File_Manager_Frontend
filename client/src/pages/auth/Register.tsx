@@ -34,7 +34,7 @@ export default function SignupPage() {
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
       const res = await fetch(`${baseUrl}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

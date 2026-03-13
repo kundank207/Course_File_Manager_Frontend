@@ -41,7 +41,7 @@ export function FileViewerModal({ isOpen, onClose, fileId, fileName }: FileViewe
 
                 if (!token) throw new Error("Authentication required");
 
-                const res = await fetch(`http://localhost:8080/api/teacher/documents/view/${fileId}`, {
+                const res = await fetch(`/api/teacher/documents/view/${fileId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
 

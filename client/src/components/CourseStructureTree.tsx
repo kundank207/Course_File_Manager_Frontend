@@ -535,7 +535,7 @@ function SectionNode({
         throw new Error("Not authenticated");
       }
 
-      const res = await fetch('http://localhost:8080/api/teacher/documents/upload', {
+      const res = await fetch('/api/teacher/documents/upload', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -586,7 +586,7 @@ function SectionNode({
       const auth = authStr ? JSON.parse(authStr) : null;
       const token = auth?.token;
 
-      const res = await fetch(`http://localhost:8080/api/teacher/documents/download/${fileId}`, {
+      const res = await fetch(`/api/teacher/documents/download/${fileId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -814,7 +814,7 @@ function FileItem({ file, onDelete, onDownload, onRefresh, isEditable = true, ov
 
     if (token) {
       // Fetch the file and open in new tab
-      fetch(`http://localhost:8080/api/teacher/documents/view/${file.id}`, {
+      fetch(`/api/teacher/documents/view/${file.id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
         .then(res => res.blob())

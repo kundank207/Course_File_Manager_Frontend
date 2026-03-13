@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { Client, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { BASE_URL } from '@/utils/authFetch';
 import { useAuth } from './AuthContext';
 
 interface SocketContextType {
@@ -21,8 +22,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
         let socket;
         try {
-            const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
-            socket = new SockJS(`${baseUrl}/ws`);
+            socket = new SockJS(`${BASE_URL}/ws`);
         } catch (e) {
             console.error("SocketInit Error", e);
             return;

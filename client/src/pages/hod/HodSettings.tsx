@@ -84,7 +84,7 @@ export default function HodSettingsPage() {
             const formData = new FormData();
             formData.append("file", file);
             const auth = JSON.parse(localStorage.getItem("courseflow_auth") || "{}");
-            const res = await fetch("http://localhost:8080/api/profile/avatar", {
+            const res = await fetch("/api/profile/avatar", {
                 method: "POST",
                 headers: { "Authorization": `Bearer ${auth.token}` },
                 body: formData,

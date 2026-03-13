@@ -1,6 +1,6 @@
 import { authFetch } from "@/utils/authFetch";
 
-const BASE_URL = "http://localhost:8080/api/admin/institutes";
+const BASE_URL = "/api/admin/institutes";
 
 export const getInstitutes = async () => {
   const res = await authFetch(BASE_URL);

@@ -46,7 +46,7 @@ export default function HodTemplateBuilderPage() {
   const [headings, setHeadings] = useState<HeadingItem[]>([]);
   const [templates, setTemplates] = useState<TemplateItem[]>([]);
 
-  const BASE_URL = "http://localhost:8080/api/templates";
+  const BASE_URL = "/api/templates";
 
   /* ===== FETCH TEMPLATES ===== */
   const fetchTemplates = async () => {

@@ -43,7 +43,7 @@ export function AdminSidebar({ className }: { className?: string }) {
 
   const loadSettings = async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
       const res = await fetch(`${baseUrl}/api/public/settings`);
       if (res.ok) {
         const data = await res.json();

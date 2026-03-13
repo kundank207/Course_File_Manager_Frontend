@@ -69,7 +69,7 @@ export default function ForgotPasswordPage() {
   const onSendOTP = async (values: z.infer<typeof emailSchema>) => {
     setLoading(true);
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
       const res = await fetch(`${baseUrl}/api/auth/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -94,7 +94,7 @@ export default function ForgotPasswordPage() {
 
   // Step 2: Verify OTP
   const onVerifyOTP = async (values: z.infer<typeof otpSchema>) => {
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
     try {
       const res = await fetch(`${baseUrl}/api/auth/verify-otp`, {
         method: "POST",
@@ -119,7 +119,7 @@ export default function ForgotPasswordPage() {
 
   // Step 3: Reset Password
   const onResetPassword = async (values: z.infer<typeof passwordSchema>) => {
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
     try {
 
       const res = await fetch(`${baseUrl}/api/auth/reset-password`, {
@@ -146,7 +146,7 @@ export default function ForgotPasswordPage() {
   const resendOTP = async () => {
     setLoading(true);
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
       const res = await fetch(`${baseUrl}/api/auth/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -1,6 +1,6 @@
 import { authFetch } from "@/utils/authFetch";
 
-const API = "http://localhost:8080/api/branch";
+const API = "/api/branch";
 
 export const getBranches = async (programId: number) => {
   const res = await authFetch(`${API}?programId=${programId}`);

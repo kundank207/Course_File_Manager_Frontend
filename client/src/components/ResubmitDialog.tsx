@@ -42,7 +42,7 @@ export const ResubmitDialog: React.FC<ResubmitDialogProps> = ({
 
             if (!token) throw new Error("Not authenticated");
 
-            const res = await fetch(`http://localhost:8080/api/teacher/documents/${document.id}/resubmit`, {
+            const res = await fetch(`/api/teacher/documents/${document.id}/resubmit`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`

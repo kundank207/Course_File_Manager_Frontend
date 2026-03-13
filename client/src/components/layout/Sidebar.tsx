@@ -83,7 +83,7 @@ export function Sidebar({ className }: { className?: string }) {
 
   const loadSettings = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/public/settings");
+      const res = await fetch("/api/public/settings");
       if (res.ok) {
         const data = await res.json();
         if (data.support_email) {

@@ -1,5 +1,5 @@
 import { authFetch } from "@/utils/authFetch";
-// const API = "http://localhost:8080/api/hod/courses";
+// const API = "/api/hod/courses";
 
 export const getHodCourses = async () => {
   const res = await authFetch("/api/hod/courses");
