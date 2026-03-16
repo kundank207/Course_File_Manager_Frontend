@@ -1,4 +1,5 @@
-import { useAuth, UserRole } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
+import type { UserRole } from "@/contexts/AuthContext";
 import {
     DropdownMenu,
     DropdownMenuContent,
