@@ -27,7 +27,8 @@ import {
 } from "@/components/ui/form";
 
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth, UserRole } from "@/contexts/AuthContext";
+import { motion } from "framer-motion";
 
 /* =======================
    VALIDATION SCHEMA
@@ -136,25 +137,59 @@ export default function LoginPage() {
     <div className="min-h-screen flex bg-muted/30">
 
       {/* LEFT PANEL */}
-             <div className="hidden lg:flex w-1/2 bg-indigo-900 text-white p-12 flex-col justify-between relative overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="hidden lg:flex w-1/2 bg-indigo-900 text-white p-12 flex-col justify-between relative overflow-hidden"
+      >
         <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay" />
         <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex items-center gap-2 mb-8"
+          >
             <div className="h-8 w-8 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm">
               <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M2 6h4" /><path d="M2 10h4" /><path d="M2 14h4" /><path d="M2 18h4" /><rect width="16" height="20" x="4" y="2" rx="2" /><path d="M16 2v20" /></svg>
             </div>
             <span className="font-bold text-xl tracking-tight">CourseFlow</span>
-          </div>
-          <h1 className="text-4xl font-bold leading-tight max-w-md">Manage your course materials with confidence.</h1>
-          <p className="mt-4 text-indigo-200 text-lg max-w-sm">Secure, organized, and accessible file management for modern education.</p>
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-4xl font-bold leading-tight max-w-md"
+          >
+            Manage your course materials with confidence.
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-4 text-indigo-200 text-lg max-w-sm"
+          >
+            Secure, organized, and accessible file management for modern education.
+          </motion.p>
         </div>
-        <div className="relative z-10 text-sm text-indigo-300">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="relative z-10 text-sm text-indigo-300"
+        >
           © 2026 CourseFlow Inc. All rights reserved.
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       {/* RIGHT PANEL */}
-      <div className="flex-1 flex items-center justify-center p-6">
-        <Card className="w-full max-w-md">
+      <motion.div 
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="flex-1 flex items-center justify-center p-6"
+      >
+        <Card className="w-full max-w-md border-none shadow-none md:border md:shadow-lg bg-transparent md:bg-card hover:shadow-xl transition-all duration-300">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">
               Sign in
@@ -246,7 +281,7 @@ export default function LoginPage() {
                   </Link>
                 </div>
 
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white shadow-md hover:shadow-lg transition-all duration-300">
                   Sign In
                 </Button>
               </form>
@@ -255,12 +290,12 @@ export default function LoginPage() {
 
           <CardFooter className="justify-center text-sm">
             Don’t have an account?
-            <Link to="/signup" className="ml-1 text-primary">
+            <Link to="/signup" className="ml-1 text-primary font-bold hover:underline">
               Sign up
             </Link>
           </CardFooter>
         </Card>
-      </div>
+      </motion.div>
     </div>
   );
 }

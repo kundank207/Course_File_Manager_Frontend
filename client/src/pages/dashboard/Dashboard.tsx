@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
 import { GlobalAnnouncement } from "@/components/GlobalAnnouncement";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 /* =======================
    TYPES
@@ -173,7 +174,12 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="space-y-6 pb-10">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.5, ease: "easeOut" }} 
+      className="space-y-6 pb-10"
+    >
       <GlobalAnnouncement />
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -473,6 +479,6 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </motion.div>
   );
 }

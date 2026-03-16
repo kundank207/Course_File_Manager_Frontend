@@ -15,8 +15,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         if (saved !== null) {
             return saved === "true";
         }
-        // Check system preference
-        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+        // Default to light mode if not in localStorage to prevent unexpected color changes on mobile
+        return false;
     });
 
     useEffect(() => {

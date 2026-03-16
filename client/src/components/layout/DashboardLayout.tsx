@@ -43,8 +43,8 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
       <div className="flex-1 flex flex-col h-full min-w-0">
         <Header onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
-          <div className="max-w-7xl mx-auto w-full">
+        <main className="flex-1 overflow-auto p-4 md:p-8 scroll-smooth">
+          <div className="max-w-7xl mx-auto w-full overflow-x-auto pb-4">
             <ErrorBoundary>
               {children ?? <Outlet />}
             </ErrorBoundary>
