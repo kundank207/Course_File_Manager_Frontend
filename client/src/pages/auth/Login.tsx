@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { BASE_URL } from "@/utils/authFetch";
+import { authService } from "@/services/api";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -75,25 +75,10 @@ export default function LoginPage() {
 
   const onSubmit = async (values: LoginForm) => {
     try {
-      const res = await fetch(`${BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
+      const data = await authService.login({
+        email: values.email,
+        password: values.password,
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast({
-          title: "Login Failed",
-          description: data.message || "Invalid credentials",
-          variant: "destructive",
-        });
-        return;
-      }
 
       // 🔐 Normalize role (backend consistency)
       const normalizeRole = (role: string) => role as UserRole;
@@ -121,10 +106,10 @@ export default function LoginPage() {
       const redirectPath = getRoleBasedRedirect(userData.activeRole);
       navigate(redirectPath, { replace: true });
 
-    } catch (error) {
+    } catch (error: any) {
       toast({
-        title: "Server Error",
-        description: "Unable to connect to server",
+        title: "Login Failed",
+        description: error.response?.data?.message || "Invalid credentials",
         variant: "destructive",
       });
     }

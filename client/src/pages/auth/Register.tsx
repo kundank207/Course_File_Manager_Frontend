@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { authService } from "@/services/api";
 
 const signupSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -35,27 +36,11 @@ export default function SignupPage() {
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
-      const res = await fetch(`${baseUrl}/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: values.name,
-          email: values.email,
-          password: values.password,
-        }),
+      const data = await authService.register({
+        name: values.name,
+        email: values.email,
+        password: values.password,
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast({
-          title: "Signup Failed",
-          description: data.message || "Something went wrong",
-          variant: "destructive",
-        });
-        return;
-      }
 
       toast({
         title: "Account Created",
@@ -63,10 +48,10 @@ export default function SignupPage() {
       });
 
       setTimeout(() => navigate("/login"), 1500);
-    } catch (err) {
+    } catch (err: any) {
       toast({
-        title: "Server Error",
-        description: "Backend se connect nahi ho paa raha",
+        title: "Signup Failed",
+        description: err.response?.data?.message || "Backend se connect nahi ho paa raha",
         variant: "destructive",
       });
     }
