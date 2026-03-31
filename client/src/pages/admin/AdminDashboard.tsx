@@ -87,12 +87,10 @@ export default function AdminDashboard() {
     { label: "Storage Used", value: formatBytes(stats?.totalStorageUsed || 0), icon: Database, color: "purple" },
   ];
 
-  if (statsLoading) return (
-    <div className="flex flex-col items-center justify-center h-[60vh] space-y-4">
-      <RefreshCw className="h-8 w-8 animate-spin text-blue-600" />
-      <p className="text-muted-foreground italic font-medium">Syncing with live system data...</p>
-    </div>
-  );
+  if (statsLoading) {
+    // We do NOT block the whole UI anymore! User gets instant access.
+    // However, if we wanted to show a top-level progress bar, we could put it here inside the UI.
+  }
 
   return (
     <div className="space-y-8 pb-10">

@@ -151,12 +151,9 @@ export default function SubjectHeadDashboardPage() {
     }
   };
 
-  if (loading) return (
-    <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-      <RefreshCw className="h-10 w-10 animate-spin text-blue-600" />
-      <p className="text-slate-400 font-bold animate-pulse uppercase tracking-widest text-[10px]">Synchronizing Course Data...</p>
-    </div>
-  );
+  if (loading) {
+    // Progressive Skeleton Fallback allows UI to render instantly
+  }
 
   return (
     <div className="max-w-[1600px] mx-auto space-y-6 p-2 lg:p-4 animate-in fade-in duration-500">

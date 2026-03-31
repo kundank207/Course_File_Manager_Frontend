@@ -85,6 +85,7 @@ export default function FacultyDashboard() {
     failureCount: number;
     errors: string[];
   } | null>(null);
+  const [isFetching, setIsFetching] = useState(true);
   /* ================= LOAD DATA ================= */
 
   useEffect(() => {
@@ -93,6 +94,7 @@ export default function FacultyDashboard() {
   }, []);
 
   const loadFaculty = async () => {
+    setIsFetching(true);
     try {
       const res = await authFetch("/api/admin/faculty/all");
       if (!res.ok) {
@@ -111,6 +113,8 @@ export default function FacultyDashboard() {
         variant: "destructive",
       });
       setFaculty([]);
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -347,15 +351,24 @@ export default function FacultyDashboard() {
         </TableHeader>
 
         <TableBody>
-          {filteredFaculty.length === 0 && (
+          {isFetching ? (
             <TableRow>
-              <TableCell colSpan={8} className="text-center text-muted-foreground">
+              <TableCell colSpan={8} className="text-center py-10">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-5 h-5 border-2 border-slate-300 border-t-indigo-600 rounded-full animate-spin" />
+                  <span className="text-slate-500 font-medium">Fetching secure records...</span>
+                </div>
+              </TableCell>
+            </TableRow>
+          ) : filteredFaculty.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={8} className="text-center text-muted-foreground py-10">
                 No faculty found
               </TableCell>
             </TableRow>
-          )}
+          ) : null}
 
-          {filteredFaculty.map(user => (
+          {!isFetching && filteredFaculty.map(user => (
             <TableRow key={user.id}>
               <TableCell>#{user.id}</TableCell>
               <TableCell>{user.name || user.username}</TableCell>

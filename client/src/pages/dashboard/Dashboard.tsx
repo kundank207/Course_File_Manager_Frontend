@@ -82,7 +82,15 @@ export default function Dashboard() {
   const [deadlines, setDeadlines] = useState<Deadline[]>([]);
   const [profile, setProfile] = useState<{ name: string, firstName: string, lastName: string } | null>(null);
   const [flaggedItems, setFlaggedItems] = useState<FlaggedItem[]>([]);
+  
+  // Create loading states for progressive rendering
   const [loading, setLoading] = useState(true);
+  const [componentsLoading, setComponentsLoading] = useState({
+    stats: true,
+    progress: true,
+    activity: true,
+    deadlines: true
+  });
 
   /* =======================
      LOAD DATA
@@ -92,33 +100,46 @@ export default function Dashboard() {
     loadDashboardData();
   }, []);
 
-  const loadDashboardData = async () => {
-    setLoading(true);
-    try {
-      const [sumRes, actRes, recRes, progRes, profRes, deadRes, flagRes] = await Promise.all([
-        authFetch("/api/teacher/dashboard/summary"),
-        authFetch("/api/teacher/dashboard/upload-activity"),
-        authFetch("/api/teacher/dashboard/recent-activity"),
-        authFetch("/api/teacher/dashboard/course-progress"),
-        authFetch("/api/profile"),
-        authFetch("/api/calendar/upcoming"),
-        authFetch("/api/teacher/dashboard/flagged-items")
-      ]);
+  // Progressive parallel fetching (No blocking Promise.all)
+  const loadDashboardData = () => {
+    setLoading(false); // Remove global block
 
-      if (sumRes.ok) setStats(await sumRes.json());
-      if (actRes.ok) setUploadActivity(await actRes.json());
-      if (recRes.ok) setRecentActivity(await recRes.json());
-      if (progRes.ok) setCourseCompletions(await progRes.json());
-      if (profRes.ok) setProfile(await profRes.json());
-      if (deadRes.ok) setDeadlines(await deadRes.json());
-      if (flagRes.ok) setFlaggedItems(await flagRes.json());
+    // 1. Profile & Stats load incredibly fast
+    authFetch("/api/profile").then(res => res.json()).then(setProfile).catch(console.error);
+    
+    authFetch("/api/teacher/dashboard/summary")
+      .then(res => res.json())
+      .then(data => {
+         setStats(data);
+         setComponentsLoading(prev => ({...prev, stats: false}));
+      }).catch(console.error);
 
-    } catch (error) {
-      console.error("Failed to load dashboard data:", error);
-      toast.error("Some dashboard components failed to load");
-    } finally {
-      setLoading(false);
-    }
+    // 2. Load heavy graphs independently
+    authFetch("/api/teacher/dashboard/upload-activity").then(res => res.json()).then(setUploadActivity).catch(console.error);
+    
+    authFetch("/api/teacher/dashboard/course-progress")
+      .then(res => res.json())
+      .then(data => {
+         setCourseCompletions(data);
+         setComponentsLoading(prev => ({...prev, progress: false}));
+      }).catch(console.error);
+
+    // 3. Load notifications and activity independently
+    authFetch("/api/teacher/dashboard/recent-activity")
+      .then(res => res.json())
+      .then(data => {
+         setRecentActivity(data);
+         setComponentsLoading(prev => ({...prev, activity: false}));
+      }).catch(console.error);
+
+    authFetch("/api/calendar/upcoming")
+      .then(res => res.json())
+      .then(data => {
+         setDeadlines(data);
+         setComponentsLoading(prev => ({...prev, deadlines: false}));
+      }).catch(console.error);
+
+    authFetch("/api/teacher/dashboard/flagged-items").then(res => res.json()).then(setFlaggedItems).catch(console.error);
   };
 
   /* =======================

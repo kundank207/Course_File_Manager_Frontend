@@ -44,6 +44,8 @@ export default function AdminUsersPage() {
   const [isAddOpen, setIsAddOpen] = useState(false);
 
 
+  const [isFetching, setIsFetching] = useState(true);
+
   /* ================= LOAD USERS ================= */
 
   useEffect(() => {
@@ -51,6 +53,7 @@ export default function AdminUsersPage() {
   }, []);
 
   const loadUsers = async () => {
+    setIsFetching(true);
     try {
       const res = await authFetch("/api/admin/pending-teachers");
 
@@ -73,6 +76,8 @@ export default function AdminUsersPage() {
         variant: "destructive",
       });
       setUsers([]);
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -202,15 +207,24 @@ export default function AdminUsersPage() {
         </TableHeader>
 
         <TableBody>
-          {filteredUsers.length === 0 && (
+          {isFetching ? (
             <TableRow>
-              <TableCell colSpan={7} className="text-center text-muted-foreground">
+              <TableCell colSpan={7} className="text-center py-10">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-5 h-5 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin" />
+                  <span className="text-slate-500 font-medium">Fetching secure records...</span>
+                </div>
+              </TableCell>
+            </TableRow>
+          ) : filteredUsers.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                 No pending users found
               </TableCell>
             </TableRow>
-          )}
+          ) : null}
 
-          {filteredUsers.map(user => (
+          {!isFetching && filteredUsers.map(user => (
             <TableRow key={user.id}>
               <TableCell>#{user.id}</TableCell>
               <TableCell>{user.username}</TableCell>
