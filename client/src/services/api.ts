@@ -91,4 +91,15 @@ export const courseService = {
   }
 };
 
+export const adminService = {
+  getTeachers: async (page = 0, size = 10) => {
+    const response = await apiClient.get(`/api/admin/teachers?page=${page}&size=${size}`);
+    return response.data;
+  },
+  getPendingTeachers: async (page = 0, size = 10) => {
+    const response = await apiClient.get(`/api/admin/pending-teachers?page=${page}&size=${size}`);
+    return response.data;
+  }
+};
+
 export default apiClient;

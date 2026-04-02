@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -7,18 +8,16 @@ import {
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
-} from "@/components/ui/select";
-import {
-  Search, Trash2, UserPlus, MoreHorizontal, CheckCircle2
+  Search, Trash2, UserPlus, MoreHorizontal, CheckCircle2, ChevronLeft, ChevronRight
 } from "lucide-react";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { adminService } from "@/services/api";
+import { Skeleton } from "@/components/ui/skeleton";
 import { authFetch } from "@/utils/authFetch";
 
 /* ================= TYPES ================= */
@@ -27,128 +26,74 @@ interface BackendUser {
   id: number;
   username: string;
   email: string;
-  role: "ADMIN" | "TEACHER" | "HOD" | "SUBJECT_HEAD";
+  role: string;
   isActive: boolean;
   createdAt: string;
+}
+
+interface PageResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
 }
 
 /* ================= COMPONENT ================= */
 
 export default function AdminUsersPage() {
   const { toast } = useToast();
-
-  const [users, setUsers] = useState<BackendUser[]>([]);
+  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
-
-
+  const [page, setPage] = useState(0);
   const [isAddOpen, setIsAddOpen] = useState(false);
-
-
-  const [isFetching, setIsFetching] = useState(true);
-
-  /* ================= LOAD USERS ================= */
-
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
-  const loadUsers = async () => {
-    setIsFetching(true);
-    try {
-      const res = await authFetch("/api/admin/pending-teachers");
-
-      if (!res.ok) {
-        toast({
-          title: "Unauthorized",
-          description: "Please login again",
-          variant: "destructive",
-        });
-        setUsers([]);
-        return;
-      }
-
-      const data = await res.json();
-      setUsers(Array.isArray(data) ? data : []);
-    } catch {
-      toast({
-        title: "Error",
-        description: "Unable to load users",
-        variant: "destructive",
-      });
-      setUsers([]);
-    } finally {
-      setIsFetching(false);
-    }
-  };
-
-  /* ================= APPROVE USER ================= */
-
-  const approveUser = async (userId: number) => {
-    try {
-      const res = await authFetch(`/api/admin/approve/${userId}`, {
-        method: "POST",
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        toast({
-          title: "Approval Failed",
-          description: err.message || "Unable to approve user",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      toast({ title: "User Approved", description: "User moved to Faculty" });
-      // Remove from this list after approval
-      setUsers(prev => prev.filter(u => u.id !== userId));
-    } catch {
-      toast({
-        title: "Server Error",
-        description: "Backend se connect nahi ho paa raha",
-        variant: "destructive",
-      });
-    }
-  };
-
   const [userToDelete, setUserToDelete] = useState<BackendUser | null>(null);
 
-  /* ================= DELETE USER ================= */
+  /* ================= REACT QUERY: FETCH ================= */
 
-  const handleDeleteUser = async () => {
-    if (!userToDelete) return;
+  const { data, isLoading, isError, isFetching } = useQuery<PageResponse<BackendUser>>({
+    queryKey: ["pendingUsers", page, searchTerm],
+    queryFn: () => adminService.getPendingTeachers(page, 10),
+    placeholderData: (previousData) => previousData, // Maintain UI during background refresh
+  });
 
-    try {
-      const res = await authFetch(`/api/admin/delete/${userToDelete.id}`, {
-        method: "DELETE",
-      });
+  /* ================= MUTATIONS ================= */
 
-      if (!res.ok) {
-        toast({ title: "Delete Failed", variant: "destructive" });
-        return;
-      }
+  const approveMutation = useMutation({
+    mutationFn: async (userId: number) => {
+      const res = await authFetch(`/api/admin/approve/${userId}`, { method: "POST" });
+      if (!res.ok) throw new Error("Approval failed");
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({ title: "User Approved", description: "User moved to Faculty" });
+      queryClient.invalidateQueries({ queryKey: ["pendingUsers"] });
+    },
+    onError: (err: any) => {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    }
+  });
 
-      setUsers(prev => prev.filter(u => u.id !== userToDelete.id));
+  const deleteMutation = useMutation({
+    mutationFn: async (userId: number) => {
+      const res = await authFetch(`/api/admin/delete/${userId}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Delete failed");
+      return res.json();
+    },
+    onSuccess: () => {
       toast({ title: "User Deleted Successfully" });
       setUserToDelete(null);
-    } catch {
-      toast({
-        title: "Server Error",
-        description: "Backend se connect nahi ho paa raha",
-        variant: "destructive",
-      });
+      queryClient.invalidateQueries({ queryKey: ["pendingUsers"] });
+    },
+    onError: (err: any) => {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
     }
-  };
-
-  /* ================= FILTER ================= */
-
-  const filteredUsers = users.filter(u => {
-    const matchesSearch =
-      u.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      u.email.toLowerCase().includes(searchTerm.toLowerCase());
-
-    return matchesSearch;
   });
+
+  /* ================= HELPERS ================= */
+
+  const users = data?.content || [];
+  const totalPages = data?.totalPages || 0;
 
   /* ================= UI ================= */
 
@@ -158,7 +103,7 @@ export default function AdminUsersPage() {
         <div>
           <h1 className="text-3xl font-bold">User Management</h1>
           <p className="text-muted-foreground">
-            Pending user approvals
+            Pending user approvals {isFetching && <span className="text-xs text-blue-500 animate-pulse ml-2">(Refreshing...)</span>}
           </p>
         </div>
 
@@ -172,6 +117,7 @@ export default function AdminUsersPage() {
             <DialogHeader>
               <DialogTitle>Create User</DialogTitle>
             </DialogHeader>
+            <p className="text-sm text-muted-foreground">Registration logic is handled via signup link.</p>
             <DialogFooter>
               <Button onClick={() => setIsAddOpen(false)}>Close</Button>
             </DialogFooter>
@@ -179,13 +125,13 @@ export default function AdminUsersPage() {
         </Dialog>
       </div>
 
-      {/* SEARCH + FILTER */}
-      <div className="flex items-center gap-4 p-4 border rounded-lg">
+      {/* SEARCH */}
+      <div className="flex items-center gap-4 p-4 border rounded-lg bg-card shadow-sm">
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-8"
-            placeholder="Search by name or email"
+            placeholder="Search within this page..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
@@ -193,104 +139,138 @@ export default function AdminUsersPage() {
       </div>
 
       {/* TABLE */}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Joined</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {isFetching ? (
+      <div className="rounded-md border bg-card">
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={7} className="text-center py-10">
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-5 h-5 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin" />
-                  <span className="text-slate-500 font-medium">Fetching secure records...</span>
-                </div>
-              </TableCell>
+              <TableHead>ID</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Joined</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
-          ) : filteredUsers.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
-                No pending users found
-              </TableCell>
-            </TableRow>
-          ) : null}
+          </TableHeader>
 
-          {!isFetching && filteredUsers.map(user => (
-            <TableRow key={user.id}>
-              <TableCell>#{user.id}</TableCell>
-              <TableCell>{user.username}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>
-                <Badge>{user.role}</Badge>
-              </TableCell>
-              <TableCell>
-                {user.isActive ? "Active" : "Inactive"}
-              </TableCell>
-              <TableCell>
-                {user.createdAt?.split("T")[0]}
-              </TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
+          <TableBody>
+            {isLoading ? (
+              [...Array(5)].map((_, i) => (
+                <TableRow key={i}>
+                  {[...Array(7)].map((_, j) => (
+                    <TableCell key={j}><Skeleton className="h-6 w-full" /></TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : users.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
+                  No pending users found
+                </TableCell>
+              </TableRow>
+            ) : (
+              users.map(user => (
+                <TableRow key={user.id} className="hover:bg-muted/50 transition-colors">
+                  <TableCell>#{user.id}</TableCell>
+                  <TableCell className="font-medium">{user.username}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">{user.role}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="secondary" className={user.isActive ? "bg-green-100 text-green-700 hover:bg-green-100" : "bg-yellow-100 text-yellow-700 hover:bg-yellow-100"}>
+                      {user.isActive ? "Active" : "Inactive"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        {!user.isActive && (
+                          <DropdownMenuItem 
+                            onClick={() => approveMutation.mutate(user.id)}
+                            disabled={approveMutation.isPending}
+                          >
+                            <CheckCircle2 className="mr-2 h-4 w-4 text-green-600" />
+                            Approve
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuItem
+                          className="text-red-600"
+                          onClick={() => setUserToDelete(user)}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" /> Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
-                    {!user.isActive && (
-                      <DropdownMenuItem onClick={() => approveUser(user.id)}>
-                        <CheckCircle2 className="mr-2 h-4 w-4 text-green-600" />
-                        Approve
-                      </DropdownMenuItem>
-                    )}
-                    <DropdownMenuItem
-                      className="text-red-600"
-                      onClick={() => setUserToDelete(user)}
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" /> Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      {/* PAGINATION CONTROLS */}
+      {!isLoading && users.length > 0 && (
+        <div className="flex items-center justify-between px-2">
+          <div className="text-sm text-muted-foreground font-medium">
+            Page {page + 1} of {totalPages}
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setPage(p => Math.max(0, p - 1))}
+              disabled={page === 0}
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" /> Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setPage(p => p + 1)}
+              disabled={page >= totalPages - 1}
+            >
+              Next <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
+        </div>
+      )}
 
-      {/* DELETE CONFIRMATION DIALOG */}
+      {/* DELETE DIALOG */}
       <Dialog open={!!userToDelete} onOpenChange={o => !o && setUserToDelete(null)}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-red-600 flex items-center gap-2">
+            <DialogTitle className="text-destructive flex items-center gap-2">
               <Trash2 className="h-5 w-5" /> Confirm Delete
             </DialogTitle>
           </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-slate-600 font-medium">
-              Kya aap sach mein ise delete karna chahte hain? Isse data hamesha ke liye chala jayega.
+          <div className="py-4 space-y-2">
+            <p className="text-sm font-medium">
+              Are you sure you want to delete this user? This action cannot be undone.
             </p>
             {userToDelete && (
-              <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-100">
-                <p className="text-xs text-red-700"><b>User:</b> {userToDelete.username} ({userToDelete.email})</p>
+              <div className="p-3 bg-muted rounded-md border text-sm">
+                <b>User:</b> {userToDelete.username} ({userToDelete.email})
               </div>
             )}
           </div>
-          <DialogFooter className="gap-2 sm:gap-0">
-            <Button variant="outline" onClick={() => setUserToDelete(null)}>
-              Nahi, Cancel
-            </Button>
-            <Button variant="destructive" onClick={handleDeleteUser}>
-              Haan, Delete Kar Do
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setUserToDelete(null)}>Cancel</Button>
+            <Button 
+                variant="destructive" 
+                onClick={() => deleteMutation.mutate(userToDelete!.id)}
+                disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? "Deleting..." : "Delete User"}
             </Button>
           </DialogFooter>
         </DialogContent>
